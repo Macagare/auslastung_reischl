@@ -15,6 +15,7 @@ class EmployeesController < ApplicationController
   # GET /employees/new
   def new
     @employee = Employee.new
+    @employee.timetables.build
   end
 
   # GET /employees/1/edit
@@ -28,6 +29,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
+        @employee.timetables.create
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else

@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  resources :employees
-  resources :employees
-  resources :timetables
+
   resources :employees do
     resources :timetables
   end
