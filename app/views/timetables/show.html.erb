@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Date:</strong>
+  <%= @timetable.date %>
+</p>
+
+<p>
+  <strong>Slot1:</strong>
+  <%= @timetable.slot1 %>
+</p>
+
+<p>
+  <strong>Slot2:</strong>
+  <%= @timetable.slot2 %>
+</p>
+
+<p>
+  <strong>Slot3:</strong>
+  <%= @timetable.slot3 %>
+</p>
+
+<p>
+  <strong>Slot4:</strong>
+  <%= @timetable.slot4 %>
+</p>
+
+<p>
+  <strong>Employee:</strong>
+  <%= @timetable.employee %>
+</p>
+
+<%= link_to 'Edit', edit_timetable_path(@timetable) %> |
+<%= link_to 'Back', timetables_path %>
