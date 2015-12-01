@@ -1,20 +1,22 @@
 class TimetablesController < ApplicationController
   before_action :set_timetable, only: [:show, :edit, :update, :destroy]
+  before_filter :search_employee
 
   # GET /timetables
   # GET /timetables.json
   def index
-    @timetables = Timetable.all
+    @timetables = @employee.timetables
   end
 
   # GET /timetables/1
   # GET /timetables/1.json
   def show
+    @timetables = @employee.timetable.find params[:id]
   end
 
   # GET /timetables/new
   def new
-    @timetable = Timetable.new
+    @timetable = @employee.timetables.build
   end
 
   # GET /timetables/1/edit
@@ -24,7 +26,7 @@ class TimetablesController < ApplicationController
   # POST /timetables
   # POST /timetables.json
   def create
-    @timetable = Timetable.new(timetable_params)
+    @timetable = @employee.timetables.build(params)
 
     respond_to do |format|
       if @timetable.save
@@ -40,6 +42,7 @@ class TimetablesController < ApplicationController
   # PATCH/PUT /timetables/1
   # PATCH/PUT /timetables/1.json
   def update
+    @timetable = @employee.timetables.find(params[:id])
     respond_to do |format|
       if @timetable.update(timetable_params)
         format.html { redirect_to @timetable, notice: 'Timetable was successfully updated.' }
@@ -62,13 +65,18 @@ class TimetablesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_timetable
-      @timetable = Timetable.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def timetable_params
-      params.require(:timetable).permit(:date, :slot1, :slot2, :slot3, :slot4, :employee_id)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_timetable
+    @timetable = Timetable.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def timetable_params
+    params.require(:timetable).permit(:date, :slot1, :slot2, :slot3, :slot4, :employee_id)
+  end
+
+  def search_employee
+    @employee = Employee.find(params[:employee_id])
+  end
 end

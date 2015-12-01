@@ -24,9 +24,6 @@
         <td><%= timetable.slot3 %></td>
         <td><%= timetable.slot4 %></td>
         <td><%= timetable.employee %></td>
-        <td><%= link_to 'Show', timetable %></td>
-        <td><%= link_to 'Edit', edit_timetable_path(timetable) %></td>
-        <td><%= link_to 'Destroy', timetable, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,4 +31,4 @@
 
 <br>
 
-<%= link_to 'New Timetable', new_timetable_path %>
+<%= link_to 'New Timetable', new_employee_timetable_path %>

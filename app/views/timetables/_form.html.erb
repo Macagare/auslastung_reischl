@@ -1,4 +1,4 @@
-<%= form_for(@timetable) do |f| %>
+<%= form_for(@employee, @timetable) do |f| %>  
   <% if @timetable.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@timetable.errors.count, "error") %> prohibited this timetable from being saved:</h2>
@@ -33,9 +33,9 @@
   </div>
   <div class="field">
     <%= f.label :employee_id %><br>
-    <%= f.text_field :employee_id %>
+    <%= f.label @timetable.employee_id %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Save"%>
   </div>
 <% end %>
