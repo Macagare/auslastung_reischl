@@ -61,6 +61,7 @@ class EmployeesController < ApplicationController
   def book_employee
     respond_to do |format|
       if booking_valide?
+        check_in_booking
         format.html { redirect_to @employee, notice: 'Employee was successfully booked.' }
         format.json { render :show, status: :created, location: @employee }
       else
@@ -74,10 +75,18 @@ class EmployeesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def booking_valide?
-    filterd_employee = @employee.timetables.date_between(params[:start_date], params[:end_date])
-    filterd_employee.map do |col|
-      col[:slot1] && col[:slot2] && col[:slot3] && col[:slot4]
-    end.count(false) >= 1
+    @filtered_timetable = @employee.timetables.date_between(params[:start_date], params[:end_date])
+    count_free_slots >= params[:required_slots]
+  end
+
+  def count_free_slots
+    @filtered_timetable.map do |col|
+        col[:slot1] && col[:slot2] && col[:slot3] && col[:slot4]
+    end.count(false)
+  end
+
+  def check_in_booking
+    @employee.timetables.date_between(params[:start_date], params[:end_date]).update(slot1: false, slot2: false, slot3: false slot4: false)
   end
 
   def set_employee
