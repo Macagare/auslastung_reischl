@@ -1,4 +1,4 @@
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Date</th>
@@ -9,13 +9,13 @@
     </tr>
   </thead>
   <tbody>
-    <% employee.timetables.each do |timetable| %>
+    <% employee.timetables.limit(10).each do |timetable| %>
     <tr>
       <td><%= timetable.date %></td>
-      <td><%= timetable.slot1 %></td>
-      <td><%= timetable.slot2 %></td>
-      <td><%= timetable.slot3 %></td>
-      <td><%= timetable.slot4 %></td>
+      <%= render 'layouts/slot', available: timetable.slot1 %>
+      <%= render 'layouts/slot', available: timetable.slot2 %>
+      <%= render 'layouts/slot', available: timetable.slot3 %>
+      <%= render 'layouts/slot', available: timetable.slot4 %>
     </tr>
     <% end %>
   </tbody>

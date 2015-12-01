@@ -1,8 +1,12 @@
 Rails.application.routes.draw do
-
   resources :employees do
     resources :timetables
+    collection do
+      get 'book'
+    end
   end
+
+
   root 'dashboard#index'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -38,7 +42,7 @@ Rails.application.routes.draw do
   #   end
 
   # Example resource route with more complex sub-resources:
-  #   resources :products do
+  #   resources :productsdo
   #     resources :comments
   #     resources :sales do
   #       get 'recent', on: :collection

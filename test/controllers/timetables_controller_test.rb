@@ -35,7 +35,7 @@ class TimetablesControllerTest < ActionController::TestCase
   end
 
   test "should update timetable" do
-    patch :update, id: @timetable, timetable: { date: @timetable.date, employee_id: @timetable.employee_id, slot1: @timetable.slot1, slot2: @timetable.slot2, slot3: @timetable.slot3, slot4: @timetable.slot4 }
+    patch :update, id: '1', timetable: { date: @timetable.date, employee_id: @timetable.employee_id, slot1: @timetable.slot1, slot2: @timetable.slot2, slot3: @timetable.slot3, slot4: @timetable.slot4 }
     assert_redirected_to timetable_path(assigns(:timetable))
   end
 

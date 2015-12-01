@@ -26,11 +26,11 @@ class TimetablesController < ApplicationController
   # POST /timetables
   # POST /timetables.json
   def create
-    @timetable = @employee.timetables.build(params)
+    @timetable = @employee.timetables.build(timetable_params)
 
     respond_to do |format|
       if @timetable.save
-        format.html { redirect_to @timetable, notice: 'Timetable was successfully created.' }
+        format.html { redirect_to employee_timetables_path, notice: 'Timetable was successfully created.' }
         format.json { render :show, status: :created, location: @timetable }
       else
         format.html { render :new }
@@ -45,7 +45,7 @@ class TimetablesController < ApplicationController
     @timetable = @employee.timetables.find(params[:id])
     respond_to do |format|
       if @timetable.update(timetable_params)
-        format.html { redirect_to @timetable, notice: 'Timetable was successfully updated.' }
+        format.html { redirect_to employee_timetables_path, notice: 'Timetable was successfully updated.' }
         format.json { render :show, status: :ok, location: @timetable }
       else
         format.html { render :edit }
@@ -59,7 +59,7 @@ class TimetablesController < ApplicationController
   def destroy
     @timetable.destroy
     respond_to do |format|
-      format.html { redirect_to timetables_url, notice: 'Timetable was successfully destroyed.' }
+      format.html { redirect_to employee_timetables_path, notice: 'Timetable was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

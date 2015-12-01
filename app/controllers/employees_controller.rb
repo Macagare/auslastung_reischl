@@ -1,5 +1,5 @@
 class EmployeesController < ApplicationController
-  before_action :set_employee, only: [:show, :edit, :update, :destroy]
+  before_action :set_employee, only: [:show, :edit, :update, :destroy, :book_employee]
 
   # GET /employees
   # GET /employees.json
@@ -29,7 +29,7 @@ class EmployeesController < ApplicationController
 
     respond_to do |format|
       if @employee.save
-        @employee.timetables.create
+        create_timetables
         format.html { redirect_to @employee, notice: 'Employee was successfully created.' }
         format.json { render :show, status: :created, location: @employee }
       else
@@ -42,15 +42,6 @@ class EmployeesController < ApplicationController
   # PATCH/PUT /employees/1
   # PATCH/PUT /employees/1.json
   def update
-    respond_to do |format|
-      if @employee.update(employee_params)
-        format.html { redirect_to @employee, notice: 'Employee was successfully updated.' }
-        format.json { render :show, status: :ok, location: @employee }
-      else
-        format.html { render :edit }
-        format.json { render json: @employee.errors, status: :unprocessable_entity }
-      end
-    end
   end
 
   # DELETE /employees/1
@@ -63,14 +54,47 @@ class EmployeesController < ApplicationController
     end
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_employee
-      @employee = Employee.find(params[:id])
-    end
+  def book
+    @employees = Employee.all
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def employee_params
-      params.require(:employee).permit(:name)
+  def book_employee
+    respond_to do |format|
+      if booking_valide?
+        format.html { redirect_to @employee, notice: 'Employee was successfully booked.' }
+        format.json { render :show, status: :created, location: @employee }
+      else
+        format.html { redirect_to @employee, notice: 'Employee is not available.' }
+        format.json { render json: @employee.errors, status: :unprocessable_entity }
+      end
     end
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def booking_valide?
+    filterd_employee = @employee.timetables.date_between(params[:start_date], params[:end_date])
+    filterd_employee.map do |col|
+      col[:slot1] && col[:slot2] && col[:slot3] && col[:slot4]
+    end.count(false) >= 1
+  end
+
+  def set_employee
+    @employee = Employee.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def employee_params
+    params.require(:employee).permit(:name)
+  end
+
+  def create_timetables
+    dates = Date.today..Date.today + 500
+    ActiveRecord::Base.transaction do
+      dates.each do |d|
+        @employee.timetables.create(date: d)
+      end
+    end
+  end
 end

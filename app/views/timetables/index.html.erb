@@ -2,7 +2,7 @@
 
 <h1>Listing Timetables</h1>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Date</th>
@@ -19,11 +19,12 @@
     <% @timetables.each do |timetable| %>
       <tr>
         <td><%= timetable.date %></td>
-        <td><%= timetable.slot1 %></td>
-        <td><%= timetable.slot2 %></td>
-        <td><%= timetable.slot3 %></td>
-        <td><%= timetable.slot4 %></td>
-        <td><%= timetable.employee %></td>
+        <%= render 'layouts/slot', available: timetable.slot1 %>
+        <%= render 'layouts/slot', available: timetable.slot2 %>
+        <%= render 'layouts/slot', available: timetable.slot3 %>
+        <%= render 'layouts/slot', available: timetable.slot4 %>
+        <td><%= timetable.employee.name %></td>
+        <td><%= link_to 'Edit', edit_employee_timetable_path(id: timetable.id) %></td>
       </tr>
     <% end %>
   </tbody>

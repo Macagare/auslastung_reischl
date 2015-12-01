@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
 
+gem 'momentjs-rails'
+gem 'bootstrap-daterangepicker-rails'
+gem 'simple_form', '~> 3.2'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.5'
@@ -34,6 +37,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
+  gem 'rspec-rails'
   gem 'byebug'
   gem 'guard', '~> 2.13'
   gem 'guard-rspec', '~> 4.6', '>= 4.6.4'

@@ -1,0 +1,14 @@
+Timerange
+<input class="daterange" type="text"/>
+
+<script type="text/javascript">
+  $(document).ready(function () {
+    $('input[class="daterange"]').daterangepicker();
+  });
+</script>
+<% @employees.each do |e| %>
+  <%= radio_button_tag(:employee, e.name) %>
+  <%= e.name %>
+<% end %>
+
+<%= submit_tag('search')  %>
